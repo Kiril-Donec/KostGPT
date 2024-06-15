@@ -38,12 +38,12 @@ body {
 
 .message-bot {
     text-align: left;
-    animation: slideInLeft 0.5s ease-in-out;
+    animation: slideInLeft 1s ease-in-out; /* Увеличено время анимации */
 }
 
 .message-user {
     text-align: right;
-    animation: slideInRight 0.5s ease-in-out;
+    animation: slideInRight 1s ease-in-out; /* Увеличено время анимации */
 }
 
 .message p {
@@ -54,12 +54,12 @@ body {
     word-break: break-word;
 }
 
-.message-user p { /* Стиль для сообщения пользователя */
-    background-color: #d9fdd3; /* Светло-зеленый цвет */
-    color: #344955; /* Темно-серый цвет текста */
+.message-user p { 
+    background-color: #d9fdd3; 
+    color: #344955; 
 }
 
-.message-bot p { /* Стиль для сообщения бота */
+.message-bot p { 
     background-color: #007bff;
     color: #fff;
 }
@@ -67,14 +67,15 @@ body {
 .chat-input {
     padding: 20px;
     border-top: 1px solid #eee;
+    display: flex; /* Flexbox для .chat-input */
+    align-items: center; /* Выравнивание по вертикали */
 }
 
 #user-input {
-    width: calc(100% - 100px);
+    width: 100%; /* Поле ввода на всю ширину */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-right: 10px;
 }
 
 #send-button {
