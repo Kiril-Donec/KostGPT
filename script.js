@@ -173,7 +173,7 @@ function sendMessage() {
 function addUserMessage(message) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', 'message-user');
-    messageElement.innerHTML = `<p>${message}</p>`;
+    messageElement.innerHTML = `<p>${message}</p><img src="images/User.jpg" alt="User" class="message-avatar">`;
     chatLog.appendChild(messageElement);
     chatLog.scrollTop = chatLog.scrollHeight;
 }
@@ -181,8 +181,8 @@ function addUserMessage(message) {
 function typeBotMessage(message) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message', 'message-bot');
-    const messageText = document.createElement('p');
-    messageElement.appendChild(messageText);
+    messageElement.innerHTML = `<img src="images/KostGPT.jpg" alt="KostGPT" class="message-avatar"><p></p>`;
+    const messageText = messageElement.querySelector('p');
     chatLog.appendChild(messageElement);
 
     let i = 0;
@@ -201,6 +201,7 @@ function typeBotMessage(message) {
 
 function generateBotResponse(message) {
     let response = "";
+    message = message.toLowerCase(); // Преобразуем сообщение в нижний регистр
 
     if (message.includes("привет") || message.includes("здравствуйте")) {
         response += "Привет ";

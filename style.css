@@ -34,16 +34,33 @@ body {
 
 .message {
     margin-bottom: 15px;
+    display: flex;
+    align-items: center;
 }
 
+/* Изменения для левого выравнивания сообщений бота */
 .message-bot {
-    text-align: left;
-    animation: slideInLeft 1s ease-in-out;
+    justify-content: flex-start; /* Выравнивание по левому краю */
+    animation: slideInLeft 1s ease-in-out; /* Анимация слева */
 }
 
+/* Изменения для правого выравнивания сообщений пользователя */
 .message-user {
-    text-align: right;
-    animation: slideInRight 1s ease-in-out;
+    justify-content: flex-end; /* Выравнивание по правому краю */
+    animation: slideInRight 1s ease-in-out; /* Анимация справа */
+}
+
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px; /* Отступ для иконки */
+}
+
+/* Изменения для отступов аватарки пользователя */
+.message-user .message-avatar {
+    margin-left: 10px; /* Отступ для иконки пользователя */
+    margin-right: 0;
 }
 
 .message p {
@@ -108,6 +125,7 @@ body {
     }
 }
 
+/* Изменение анимации для правого выравнивания */
 @keyframes slideInRight {
     from {
         transform: translateX(100%);
