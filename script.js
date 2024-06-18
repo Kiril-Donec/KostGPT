@@ -2,147 +2,55 @@ const userInput = document.getElementById('user-input');
 const sendButton = document.getElementById('send-button');
 const chatLog = document.querySelector('.chat-log');
 
-const current_time = new Date();
-const formatted_time = current_time.toLocaleTimeString([], {
+// Получаем время в формате 13:54 с учетом часового пояса пользователя
+const formatted_time = new Date().toLocaleTimeString([], {
     hour: '2-digit',
-    minute: '2-digit'
+    minute: '2-digit',
+    hour12: false // Отключаем 12-часовой формат
 });
 
-const randomFacts = [
-    "В языке древних греков не существовало слова, которое обозначало религию",
-    "Изначально, отвертка была изобретена для выковыривания гвоздей, шуруп был изобретен на 100 лет позже",
-    "Ежедневно 60 человек становятся миллионерами",
-    "Лимон содержит больше сахара, чем клубника",
-    "У медуз нет мозгов и кровеносных сосудов",
-    "За год на Землю падает до 500 кг марсианского метеорита",
-    "На Юпитере регулярно идут алмазные дожди",
-    "У жирафа и человека одинаковое количество шейных позвонков",
-    "За год на Землю падает до 500 кг марсианского метеорита",
-    "На Юпитере регулярно идут алмазные дожди",
-    "У жирафа и человека одинаковое количество шейных позвонков"
-];
+const vowels = "аеёиоуыэюя";
+const consonants = "бвгджзйклмнпрстфхцчшщ";
 
-const randomCharacters = [
-    "Апельсин",
-    "Дрова",
-    "Ютуб",
-    "Муха",
-    "Бумага",
-    "Кофе",
-    "Ноутбук",
-    "Телефон",
-    "Календарь",
-    "Ключи",
-    "Карандаш",
-    "Часы",
-    "Солнце",
-    "Луна",
-    "Звезда",
-    "Книга",
-    "Газета",
-    "Мяч",
-    "Цветок",
-    "Дерево",
-    "Зонтик",
-    "Очки",
-    "Шариковая ручка",
-    "Чемодан",
-    "Замок",
-    "Бабочка",
-    "Вода",
-    "Снег",
-    "Лёд",
-    "Туман",
-    "Компьютер",
-    "Монитор",
-    "Мышь",
-    "Клавиатура",
-    "Микрофон",
-    "Наушники",
-    "Планшет",
-    "Камера",
-    "Телевизор",
-    "Пульт",
-    "Лампа",
-    "Свет",
-    "Кровать",
-    "Подушка",
-    "Одеяло",
-    "Ковёр",
-    "Половик",
-    "Зеркало",
-    "Картина",
-    "Стиральная машина",
-    "Холодильник",
-    "Чайник",
-    "Сковорода",
-    "Тарелка",
-    "Вилка",
-    "Ложка",
-    "Нож",
-    "Бокал",
-    "Чашка",
-    "Заварочный чайник",
-    "Фонарик",
-    "Ваза",
-    "Книжная полка",
-    "Банка",
-    "Флешка",
-    "Диск",
-    "Гитара",
-    "Пианино",
-    "Саксофон",
-    "Барабан",
-    "Скрипка",
-    "Труба",
-    "Скейтборд",
-    "Велосипед",
-    "Ролики",
-    "Сноуборд",
-    "Лыжи",
-    "Маска",
-    "Палатка",
-    "Рюкзак",
-    "Карта",
-    "Компас",
-    "Лупа",
-    "Термос",
-    "Палочки для еды",
-    "Консервный нож",
-    "Плита",
-    "Духовка",
-    "Микроволновая печь",
-    "Блендер",
-    "Миксер",
-    "Кофемолка",
-    "Весы",
-    "Гиря",
-    "Тренажёр",
-    "Гантеля",
-    "Кубик Рубика",
-    "Филипп Киркоров",
-    "Алла Пугачёва",
-    "Сергей Лазарев",
-    "Земфира",
-    "Баста",
-    "Полина Гагарина",
-    "Дима Билан",
-    "Валерия",
-    "Игорь Крутой",
-    "Юрий Лоза",
-    "Виктор Цой",
-    "Ани Лорак",
-    "Владимир Пресняков",
-    "Наташа Королёва",
-    "Градусы",
-    "Вера Брежнева",
-    "Тимати",
-    "Егор Крид",
-    "Нюша",
-    "Александр Розенбаум"
-];
+function is_vowel(char) {
+    return vowels.includes(char);
+}
 
-let randomNumber = Math.floor(Math.random() * 11);
+function is_consonant(char) {
+    return consonants.includes(char);
+}
+
+function generate_word() {
+    const length = Math.floor(Math.random() * (7 - 3 + 1)) + 3; // Random length from 3 to 7
+    let word = [];
+
+    // Start with a vowel or consonant randomly
+    if (Math.random() < 0.5) {
+        word.push(vowels[Math.floor(Math.random() * vowels.length)]);
+    } else {
+        word.push(consonants[Math.floor(Math.random() * consonants.length)]);
+    }
+
+    for (let i = 1; i < length; i++) {
+        if (is_vowel(word[word.length - 1])) {
+            word.push(consonants[Math.floor(Math.random() * consonants.length)]);
+        } else {
+            word.push(vowels[Math.floor(Math.random() * vowels.length)]);
+        }
+    }
+
+    return word.join('');
+}
+
+function handle_go_command() {
+    const directions = ["налево", "направо", "прямо"];
+    const steps = ["1 шаг", "2 шага", "3 шага", "4 шага"];
+    for (let i = 0; i < 5; i++) {
+        const direction = directions[Math.floor(Math.random() * directions.length)];
+        const step = steps[Math.floor(Math.random() * steps.length)];
+        typeBotMessage(`KostGPT: поверните ${direction}, ${step}, `); 
+    }
+}
 
 function isMessageEmpty(message) {
     return message.trim() === "";
@@ -212,15 +120,23 @@ function generateBotResponse(message) {
     }
 
     if (message.includes("хорошо") || message.includes("ок") || message.includes("норм")) {
-        response += "Молодец";
+        response += "Молодец ";
     }
 
+    if (message.includes("себе") || message.includes("ты кто") || message.includes("кто ты")) {
+        response += 'Я полу-модель созданная Константином Орловым, который прославился благодаря своему персонажу "Т-Ф". Также Кирилл под ником Kirix, помог организовать сайт со мной. Насчёт полу-модели, я просто обрабатываю найденные ключевые слова в ответе и выдаю ответ, в отличие от настоящих нейросетей, которые проводят много сложных математических операций. ';
+    }
+    
     if (message.includes("время")) {
         response += "Сейчас ровно " + formatted_time + " ";
     }
 
-    if (message.includes("точно")) {
-        response += "Точно-точно";
+    if (message.includes("точно") || message.includes("верен")) {
+        response += "Точно-точно ";
+    }
+
+    if (message.includes("упер") || message.includes("ага") || message.includes("класс")) {
+        response += "Ага) ";
     }
 
     if (message.includes("спасибо")) {
@@ -232,7 +148,7 @@ function generateBotResponse(message) {
     }
 
     if (message.includes("любое число")) {
-        randomNumber = Math.floor(Math.random() * 11); 
+        randomNumber = Math.floor(Math.random() * 11);
         response += "Я могу генерировать числа от 0 до 10. Сейчас выпало число " + randomNumber + ". Напиши 'Число', чтобы перегенерировать ";
     }
 
@@ -248,8 +164,17 @@ function generateBotResponse(message) {
         response += "Это всё: " + randomCharacters[Math.floor(Math.random() * randomCharacters.length)] + ". ";
     }
 
+    if (message.includes("название")) {
+        response += "Вот ваше название: " + generate_word() + ". ";
+    }
+    
     if (message.includes("пока") || message.includes("до свидания")) {
         response += "Пока, удачного дня :3";
+    }
+
+    if (message.includes("доброться")) {
+        handle_go_command();
+        return response; // Возвращаем пустой ответ, чтобы не дублировать стандартное сообщение 
     }
 
     if (response === "") {
