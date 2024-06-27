@@ -347,16 +347,40 @@ function startAnimation() {
   const logo = loadingScreen.querySelector('h1');
   const chatContainer = document.querySelector('.chat-container');
 
-  // Анимация логотипа (без перемещения в DOM)
-  logo.addEventListener('animationend', () => {
-    // Показываем чат-контейнер
-    chatContainer.classList.add('show'); 
+  // Показываем загрузочный экран
+  loadingScreen.style.opacity = '1'; // Делаем экран загрузки видимым
+  loadingScreen.style.pointerEvents = 'auto'; // Включаем взаимодействие с пользователем
 
-    // Удаляем загрузочный экран после завершения анимации логотипа
+  // Удаляем загрузочный экран после завершения анимации логотипа
+  logo.addEventListener('animationend', () => {
+    // Анимация исчезновения логотипа
+    logo.style.animation = 'logoDisappear 0.3s ease-out forwards';
+
+    // Показываем интерфейс
     setTimeout(() => {
-      loadingScreen.remove(); 
-    }, 2000);  
+      chatContainer.classList.add('show');
+    }, 400); // Задержка в 0.2 секунды (200 мс) для плавного перехода
+
+    // Удаляем загрузочный экран после завершения анимации исчезновения логотипа
+    setTimeout(() => {
+      loadingScreen.remove();
+    }, 500); // Меняем задержку на 0.7 секунды (700 мс) для плавного исчезновения
   });
+
+  // Анимация исчезновения логотипа
+  const logoDisappearKeyframes = `
+    @keyframes logoDisappear {
+      0% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+  `;
+  const logoDisappearStyle = document.createElement('style');
+  logoDisappearStyle.appendChild(document.createTextNode(logoDisappearKeyframes));
+  document.head.appendChild(logoDisappearStyle);
 }
 
 // Запускаем анимацию после загрузки страницы

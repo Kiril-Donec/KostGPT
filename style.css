@@ -337,26 +337,21 @@ body {
   font-size: 48px;
   font-weight: 600;
   color: #007aff; 
-  position: relative; /* Добавляем position: relative */
-  animation: logoMoveToHeader 2s ease-in-out 0.5s forwards; /* Добавляем задержку 0.5s */
+  opacity: 0; /* Начальная прозрачность */
+  animation: logoMoveToHeader 1s ease-in-out forwards; /* Уменьшаем время анимации */
 }
 
 /* Анимация перемещения логотипа в заголовок */
 @keyframes logoMoveToHeader {
   0% {
     opacity: 0;
-    transform: scale(10); /* Начинаем с увеличенного размера */
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1); 
+    transform: scale(10); /* Увеличиваем начальный размер для плавного появления */
   }
   100% {
-    opacity: 1; /* Убираем для него position: relative */
-    left: 0;
+    opacity: 1;
+    transform: scale(1);
   }
 }
-
 
 /* Стили для подложки оверлея */
 #fraud-overlay-bg {
