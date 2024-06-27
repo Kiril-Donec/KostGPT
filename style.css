@@ -44,21 +44,60 @@ body {
 /* Заголовок чата */
 .chat-header {
   background-color: white;
-  padding: 15px;
+  padding: 20px; /* Увеличиваем отступы для увеличения высоты */
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #e5e5ea;
   transition: all 0.2s ease-in-out;
-  transform: translateY(-20px) rotateX(-20deg); /*  Добавляем поворот */
+  transform: translateY(-20px) rotateX(-20deg); /* Добавляем поворот */
   animation: headerSlideDown 0.8s ease-out 0.5s forwards;
-  text-align: left; /* Выравнивание текста по левому краю */ 
+  text-align: left; /* Выравнивание текста по левому краю */
+  height: 80px; /* Задаем фиксированную высоту */
 }
 
 .chat-header h2 {
-  font-size: 18px;
+  font-size: 24px; /* Увеличиваем размер шрифта */
   font-weight: 600;
-  position: relative; /*  Позволяет позиционировать #kostgpt-logo внутри */ 
+  position: relative; /* Позволяет позиционировать #kostgpt-logo внутри */
+  animation: gradientAnimation 8s ease-in-out infinite; /* Анимация градиента */
+  background: linear-gradient(45deg, #ff6ec4, #7873f5, #1fd1f9);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+#kostgpt-logo {
+  margin-left: 0; /* Убираем отступ слева */
+  font-size: 32px; /* Увеличиваем размер шрифта для логотипа */
+  font-weight: bold; /* Жирное начертание для логотипа */
+  color: #333; /* Цвет текста для логотипа */
+  position: absolute; /* Абсолютное позиционирование */
+  left: 20px; /* Располагаем логотип по левому краю заголовка */
+  animation: gradientAnimation 8s ease-in-out infinite; /* Анимация градиента */
+  background: linear-gradient(45deg, #ff6ec4, #7873f5, #1fd1f9);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+/* Анимация градиента */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 @keyframes headerSlideDown {
@@ -299,24 +338,25 @@ body {
   font-weight: 600;
   color: #007aff; 
   position: relative; /* Добавляем position: relative */
-  animation: logoMoveToHeader 2s ease-in-out 0.5s forwards; /*  Добавляем задержку 0.5s */
+  animation: logoMoveToHeader 2s ease-in-out 0.5s forwards; /* Добавляем задержку 0.5s */
 }
 
 /* Анимация перемещения логотипа в заголовок */
 @keyframes logoMoveToHeader {
   0% {
     opacity: 0;
-    transform: scale(1.2); /* Начинаем с увеличенного размера */
+    transform: scale(10); /* Начинаем с увеличенного размера */
   }
   50% {
     opacity: 1;
     transform: scale(1); 
   }
   100% {
-    top: 0;   /* Перемещаем логотип в левый верхний угол .chat-header h2 */
-    left: 0; 
+    opacity: 1; /* Убираем для него position: relative */
+    left: 0;
   }
 }
+
 
 /* Стили для подложки оверлея */
 #fraud-overlay-bg {
