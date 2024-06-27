@@ -1,40 +1,48 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>KostGPT</title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="icons/KostGPT.ico" type="image/x-icon">
-    <meta property="og:title" content="KostGPT - Чат-бот для общения">
-    <meta property="og:description" content="Общайтесь с KostGPT">
-    <meta property="og:image" content="images/KostGPT.jpg">
-    <meta property="og:url" content="https://kiril-donec.github.io/KostGPT.github.io/">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <title>KostGPT</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="icons/KostGPT.ico" type="image/x-icon">
+  <meta property="og:title" content="KostGPT - Чат-бот для общения">
+  <meta property="og:description" content="Общайтесь с KostGPT">
+  <meta property="og:image" content="images/KostGPT.jpg">
+  <meta property="og:url" content="https://kiril-donec.github.io/KostGPT.github.io/">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <div id="fraud-overlay">
-        <div class="fraud-message">
-            <i class="fas fa-exclamation-triangle"></i>
-            <h2>Аварийное выключение от мошенничества</h2>
-        </div>
-    </div>
-    <div class="chat-container">
-        <div class="chat-header">
-            <h2>KostGPT</h2>
-        </div>
-        <div class="chat-log">
-            <div class="message message-bot">
-                <img src="images/KostGPT.jpg" alt="KostGPT" class="message-avatar">
-                <p>Привет, как дела?</p>
-            </div>
-        </div>
-        <div class="chat-input">
-            <input type="text" id="user-input" placeholder="Введите сообщение...">
-            <button id="send-button">Отправить</button>
-        </div>
-    </div>
 
-    <script src="script.js"></script>
+  <div id="loading-screen">
+    <h1>KostGPT</h1>
+  </div>
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2><h1 id="kostgpt-logo">KostGPT</h1></h2> 
+    </div>
+    <div class="chat-log">
+      <div class="message message-bot">
+        <img src="images/KostGPT.jpg" alt="KostGPT" class="message-avatar">
+        <p>Привет, как дела?</p>
+      </div>
+    </div>
+    <div class="chat-input">
+      <input type="text" id="user-input" placeholder="Введите сообщение...">
+      <button id="send-button">Отправить</button>
+    </div>
+  </div>
+
+  <!-- Оверлей мошенничества -->
+  <div id="fraud-overlay-bg"></div> 
+  <div id="fraud-overlay">
+    <div class="fraud-message">
+      <i class="fas fa-exclamation-triangle"></i>
+      <h2>Аварийное выключение от мошенничества</h2>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

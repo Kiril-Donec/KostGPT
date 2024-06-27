@@ -1,206 +1,397 @@
+/* Общие стили */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans,
+    Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+  background-color: #f2f2f7;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  transition: all 0.2s ease-in-out;
 }
 
+/* Стили для чата */
 .chat-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.2s ease-in-out;
+  opacity: 0;  /* Скрываем чат-контейнер */
+  pointer-events: none; /* Блокируем взаимодействие */
 }
 
+/* Анимация появления чата */
+.chat-container.show {
+  opacity: 1;
+  pointer-events: auto;
+  animation: chatFadeIn 1s ease-out forwards; /* Изменена анимация */
+}
+
+@keyframes chatFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Заголовок чата */
 .chat-header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
+  background-color: white;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e5e5ea;
+  transition: all 0.2s ease-in-out;
+  transform: translateY(-20px) rotateX(-20deg); /*  Добавляем поворот */
+  animation: headerSlideDown 0.8s ease-out 0.5s forwards;
+  text-align: left; /* Выравнивание текста по левому краю */ 
 }
 
+.chat-header h2 {
+  font-size: 18px;
+  font-weight: 600;
+  position: relative; /*  Позволяет позиционировать #kostgpt-logo внутри */ 
+}
+
+@keyframes headerSlideDown {
+  from { transform: translateY(-20px) rotateX(-20deg); opacity: 0; }
+  to { transform: translateY(0) rotateX(0); opacity: 1; }
+}
+
+.chat-header button {
+  background: none;
+  border: none;
+  font-size: 17px;
+  font-weight: 500;
+  color: #007aff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Список сообщений */
 .chat-log {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f2f2f7;
+  -webkit-overflow-scrolling: touch;
+  perspective: 800px; /* Для более объемных анимаций с поворотом */
+  transition: all 0.2s ease-in-out;
+  transform: scale(0.9) rotateY(10deg); /*  Добавляем поворот */
+  animation: logZoomIn 0.8s ease-out 0.8s forwards; 
 }
 
+@keyframes logZoomIn {
+  from { transform: scale(0.9) rotateY(10deg); opacity: 0; }
+  to { transform: scale(1) rotateY(0); opacity: 1; }
+}
+
+/* Красивая полоса прокрутки */
+.chat-log::-webkit-scrollbar {
+  width: 6px; /* Ширина полосы прокрутки */
+}
+
+.chat-log::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.5); /* Более темный цвет */
+  border-radius: 4px; /* Более скругленные углы */
+}
+
+/* Сообщения */
 .message {
-    margin-bottom: 15px;
-    display: flex;
-    align-items: center;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-end;
 }
 
-/* Изменения для левого выравнивания сообщений бота */
+/* Отдельная анимация для сообщений бота (слева) */
 .message-bot {
-    justify-content: flex-start; /* Выравнивание по левому краю */
-    animation: slideInLeft 1s ease-in-out; /* Анимация слева */
+  justify-content: flex-start;
+  animation: messageAppearBot 1s ease-out forwards; /* Новая анимация для бота */
 }
 
-/* Изменения для правого выравнивания сообщений пользователя */
+/* Анимация появления сообщений бота */
+@keyframes messageAppearBot {
+  0% {
+    opacity: 0;
+    transform: translateX(20px) scale(0.5); /* Начинаем справа */
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1); 
+  }
+}
+
+/* Анимация появления сообщений пользователя (без изменений) */
 .message-user {
-    justify-content: flex-end; /* Выравнивание по правому краю */
-    animation: slideInRight 1s ease-in-out; /* Анимация справа */
+  justify-content: flex-end;
+  animation: messageAppear 1s ease-out forwards; 
 }
 
+@keyframes messageAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.5); 
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);  
+  }
+}
+
+/* Аватарка */
 .message-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px; /* Отступ для иконки */
+  width: 36px;
+  height: 36px;
+  border-radius: 18px;
+  margin-right: 10px;
+  overflow: hidden;
 }
 
-/* Изменения для отступов аватарки пользователя */
+/* Меняем отступы для аватара пользователя */
 .message-user .message-avatar {
-    margin-left: 10px; /* Отступ для иконки пользователя */
-    margin-right: 0;
+  margin-left: 10px;
+  margin-right: 0;
 }
 
+/* Текст сообщения */
 .message p {
-    display: inline-block;
-    padding: 12px 18px;
-    border-radius: 20px;
-    max-width: 75%;
-    word-break: break-word;
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: 18px; /* Все углы скруглены */
+  max-width: 75%;
+  word-break: break-word;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #333;
+  position: relative; /* Для позиционирования подложки */
 }
 
 .message-user p {
-    background-color: #d9fdd3;
-    color: #344955;
+  background-color: #22c55e;
+  color: white;
 }
 
 .message-bot p {
-    background-color: #007bff;
-    color: #fff;
+  background-color: rgba(230, 230, 235, 0.95);
+  color: #333;
+  backdrop-filter: blur(5px);
 }
 
+/* Улучшенный хвостик */
+.message p::after { 
+  content: '';
+  position: absolute;
+  bottom: 2px; 
+  z-index: -1;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  animation: bubbleGrow 0.3s ease-out forwards; 
+}
+
+/* Хвостик для сообщений бота (слева) */
+.message-bot p::after {
+  left: 10px; 
+  border-width: 8px 10px 8px 0;
+  border-color: transparent rgba(230, 230, 235, 0.95) transparent transparent; 
+}
+
+/* Хвостик для сообщений пользователя (справа) */
+.message-user p::after {
+  right: 10px;
+  border-width: 8px 0 8px 10px;
+  border-color: transparent transparent transparent #22c55e;
+}
+
+/* Новая анимация для подложки */
+@keyframes bubbleGrow {
+  0% {
+    transform: scaleX(0); 
+  }
+  100% {
+    transform: scaleX(1); 
+  }
+}
+
+/* Ввод сообщения */
 .chat-input {
-    padding: 20px;
-    border-top: 1px solid #eee;
-    display: flex;
-    align-items: center;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-top: 1px solid #e5e5ea;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  transform: translateY(20px) rotateX(20deg); /*  Добавляем поворот */
+  animation: inputSlideUp 0.8s ease-out 1.1s forwards; 
+}
+
+@keyframes inputSlideUp {
+  from { transform: translateY(20px) rotateX(20deg); opacity: 0; }
+  to { transform: translateY(0) rotateX(0); opacity: 1; }
 }
 
 #user-input {
-    width: 100%; 
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  flex-grow: 1;
+  padding: 12px;
+  border: 1px solid #d1d1d6;
+  border-radius: 20px;
+  font-size: 16px;
+  margin-right: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+/* Плавное изменение фона при фокусе */
+#user-input:focus {
+  background-color: rgba(240, 240, 240, 0.9);
 }
 
 #send-button {
-    width: 80px;
-    padding: 10px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: #007aff;
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, all 0.2s ease-in-out;
 }
 
 #send-button:hover {
-    background-color: #0062cc;
+  background-color: #0a60ff;
 }
 
-/* Анимации для сообщений */
-@keyframes slideInLeft {
-    from {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+/* Плавная анимация появления текста */
+@keyframes textFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(5px) scale(0.9); /* Начинаем с уменьшенного размера */
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);   /* Увеличиваем размер */
+  }
 }
 
-/* Изменение анимации для правого выравнивания */
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
+/* Загрузочный экран */
+#loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001; /* Поверх всех элементов */
 }
 
-/* Медиа-запросы для адаптации */
-@media (max-width: 768px) { /* Для планшетов и мобильных */
-    .chat-container {
-        width: 100%;
-        height: 100%;
-    }
-
-    .message p {
-        max-width: 90%; /* Увеличиваем максимальную ширину сообщений */
-    }
-
-    #user-input {
-        font-size: 16px; /* Уменьшаем размер шрифта */
-    }
+#loading-screen h1 {
+  font-size: 48px;
+  font-weight: 600;
+  color: #007aff; 
+  position: relative; /* Добавляем position: relative */
+  animation: logoMoveToHeader 2s ease-in-out 0.5s forwards; /*  Добавляем задержку 0.5s */
 }
 
-@media (max-width: 480px) { /* Для мобильных телефонов */
-    .chat-header {
-        padding: 15px; /* Уменьшаем отступы */
-    }
+/* Анимация перемещения логотипа в заголовок */
+@keyframes logoMoveToHeader {
+  0% {
+    opacity: 0;
+    transform: scale(1.2); /* Начинаем с увеличенного размера */
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1); 
+  }
+  100% {
+    top: 0;   /* Перемещаем логотип в левый верхний угол .chat-header h2 */
+    left: 0; 
+  }
+}
 
-    .message p {
-        font-size: 14px; /* Уменьшаем размер шрифта */
-    }
-
-    .chat-input {
-        padding: 15px; /* Уменьшаем отступы */
-    }
-
-    #send-button {
-        width: 60px; /* Уменьшаем ширину кнопки */
-        font-size: 14px; /* Уменьшаем размер шрифта */
-    }
+/* Стили для подложки оверлея */
+#fraud-overlay-bg {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Затемнение */
+  z-index: 999;
+  animation: fadeIn 0.3s ease-in-out; /* Более плавное появление */
+  pointer-events: auto; /* Разрешаем клики на подложке */ 
 }
 
 /* Стили для оверлея */
 #fraud-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Убедитесь, что оверлей находится поверх всех элементов */
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 400px;
+  z-index: 1000;
+  background-color: white;
+  padding: 20px;
+  border-radius: 15px; /* Более скругленные углы */
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.15); /* Более заметная тень */
+  animation: springUp 0.5s ease-in-out forwards; /* Красивая анимация */
 }
 
-.fraud-message {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+/* Блокируем клики на элементах под оверлеем */
+body.overlay-active { 
+  pointer-events: none; 
 }
 
-.fraud-message i {
-    font-size: 50px;
-    color: #ff0000;
-    margin-bottom: 20px;
+/* Красивая анимация появления оверлея */
+@keyframes springUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -40%) scale(0.95);
+  }
+  70% {
+    transform: translate(-50%, -55%) scale(1.05); /* Эффект пружины */
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
-.fraud-message h2 {
-    font-size: 24px;
-    color: #333;
+/* Медиа-запросы */
+@media (max-width: 768px) {
+  .message p {
+    max-width: 85%;
+  }
+}
+
+@media (max-width: 480px) {
+  .message p {
+    font-size: 15px;
+  }
+
+  .chat-input {
+    padding: 8px;
+  }
+
+  #user-input {
+    padding: 10px;
+    font-size: 15px;
+  }
+
+  #send-button {
+    padding: 10px 14px;
+    font-size: 15px;
+  }
 }
